@@ -119,6 +119,7 @@ prepare() {
 }
 
 package() {
+  local license
   local standard_licenses=(
     AGPL-3.0-only
     AGPL-3.0-or-later
