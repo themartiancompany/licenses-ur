@@ -5,7 +5,7 @@
 _upstream_name=license-list-data
 _upstream_version=3.21
 pkgname=licenses
-pkgver=20230903
+pkgver=20230917
 pkgrel=1
 pkgdesc="A set of common license files"
 arch=(any)
