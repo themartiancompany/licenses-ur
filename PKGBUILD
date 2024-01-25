@@ -105,6 +105,8 @@ package() {
     GFDL-1.3-no-invariants-or-later
     GFDL-1.3-only
     GFDL-1.3-or-later
+    GPL-1.0-only
+    GPL-1.0-or-later
     GPL-2.0-only
     GPL-2.0-or-later
     GPL-3.0-only
