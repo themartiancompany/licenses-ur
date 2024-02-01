@@ -87,6 +87,7 @@ package() {
     CPL-1.0
     EPL-1.0
     EPL-2.0
+    FSFAP
     GFDL-1.1-invariants-only
     GFDL-1.1-invariants-or-later
     GFDL-1.1-no-invariants-only
