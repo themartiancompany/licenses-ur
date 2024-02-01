@@ -142,6 +142,7 @@ package() {
     GPL-3.0-linking-exception
     GPL-3.0-linking-source-exception
     LGPL-3.0-linking-exception
+    Linux-syscall-note
     MPL-2.0-no-copyleft-exception
   )
 
