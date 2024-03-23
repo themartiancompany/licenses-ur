@@ -1,4 +1,8 @@
-# Maintainer: David Runge <dvzrv@archlinux.org>
+# SPDX-License-Identifier: AGPL-3.0
+# 
+# Maintainer:  Pellegrino Prevete <cGVsbGVncmlub3ByZXZldGVAZ21haWwuY29tCg== | base -d>
+# Maintainer:  Truocolo <truocolo@aol.com>
+# Maintainer:  David Runge <dvzrv@archlinux.org>
 # Contributor: Levente Polyak <anthraxx[at]archlinux[dot]org>
 # Contributor: Dan McGee <dan@archlinux.org>
 
@@ -8,8 +12,12 @@ pkgname=licenses
 pkgver=20240206
 pkgrel=1
 pkgdesc="A set of common license files"
-arch=(any)
-license=(LicenseRef-None)
+arch=(
+  any
+)
+license=(
+  LicenseRef-None
+)
 url="https://www.archlinux.org/"
 makedepends=(
   jq
@@ -17,21 +25,42 @@ makedepends=(
 source=(
   $_upstream_name-$_upstream_version.tar.gz::https://github.com/spdx/$_upstream_name/archive/refs/tags/v$_upstream_version.tar.gz
 )
-sha512sums=('b213fe66699770d75a4c994a01a5c08325751423516c2fb871088a47e7e7ce605736064f5ce3a63dc1d3c462271832db7bc464ac968df1888f9823787964c786')
-b2sums=('751d4a31a74b1f0c6831b2e2ad7b361fddca6f9e71f58f57b2dc4fdf13f3ad2a63c652d0333e97d25c1748b7ced62db0b799cc5421c7ed4e117b46fa0869bf3c')
+sha512sums=('b213fe66699770d75a4c994a01a5c08325751423516c2fb871088a47e7e7ce605736064f5ce3a63dc1d3c462271832db7bc464ac968df1888f9823787964c786'
+  )
+b2sums=(
+  '751d4a31a74b1f0c6831b2e2ad7b361fddca6f9e71f58f57b2dc4fdf13f3ad2a63c652d0333e97d25c1748b7ced62db0b799cc5421c7ed4e117b46fa0869bf3c'
+)
 
 prepare() {
-  local license
-  touch known_spdx_license_exceptions.txt known_spdx_license_identifiers.txt
-
-  # create list of known, non-deprecated SPDX license identifiers
-  for license in $(jq -r '.licenses[] | select(.isDeprecatedLicenseId == false) | .licenseId' $_upstream_name-$_upstream_version/json/licenses.json); do
-    printf "%s\n" "$license" >> known_spdx_license_identifiers.txt
+  local \
+    license
+  touch \
+    known_spdx_license_exceptions.txt \
+    known_spdx_license_identifiers.txt
+  # create list of known,
+  # non-deprecated SPDX license identifiers
+  for license \
+    in $( \
+         jq \
+           -r \
+           '.licenses[] | select(.isDeprecatedLicenseId == false) | .licenseId' \
+           $_upstream_name-$_upstream_version/json/licenses.json); do
+    printf \
+      "%s\n" \
+        "$license" >> \
+      known_spdx_license_identifiers.txt
   done
-
   # create list of known SPDX exception identifiers
-  for license in $(jq -r '.exceptions[] | .licenseExceptionId' $_upstream_name-$_upstream_version/json/exceptions.json); do
-    printf "%s\n" "$license" >> known_spdx_license_exceptions.txt
+  for license \
+    in $( \
+         jq \
+           -r \
+           '.exceptions[] | .licenseExceptionId' \
+           $_upstream_name-$_upstream_version/json/exceptions.json); do
+    printf \
+      "%s\n" \
+      "$license" >> \
+      known_spdx_license_exceptions.txt
   done
 }
 
@@ -148,14 +177,32 @@ package() {
   )
 
   for license in "${standard_licenses[@]}"; do
-    install -vDm 644 "$_upstream_name-$_upstream_version/text/$license.txt" -t "$pkgdir/usr/share/licenses/spdx/"
+    install \
+      -vDm 644 \
+      "$_upstream_name-$_upstream_version/text/$license.txt" \
+      -t \
+      "$pkgdir/usr/share/licenses/spdx/"
   done
   for license in "${standard_exceptions[@]}"; do
-    install -vDm 644 "$_upstream_name-$_upstream_version/text/$license.txt" -t "$pkgdir/usr/share/licenses/spdx/exceptions/"
+    install \
+      -vDm \
+        644 \
+      "$_upstream_name-$_upstream_version/text/$license.txt" \
+      -t \
+        "$pkgdir/usr/share/licenses/spdx/exceptions/"
   done
-
-  install -vDm 644 known_spdx_license_identifiers.txt -t "$pkgdir/usr/share/licenses/"
-  install -vDm 644 known_spdx_license_exceptions.txt -t "$pkgdir/usr/share/licenses/"
+  install \
+    -vDm \
+      644 \
+    known_spdx_license_identifiers.txt \
+    -t \
+    "$pkgdir/usr/share/licenses/"
+  install \
+    -vDm \
+      644 \
+    known_spdx_license_exceptions.txt \
+    -t \
+      "${pkgdir}/usr/share/licenses/"
 }
 
-# vim: ts=2 sw=2 et:
+# vim:set sw=2 sts=-1 et:
